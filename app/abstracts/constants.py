@@ -12,8 +12,23 @@ PADDLE_HEIGHT = 100
 PADDLE_CENTERPOINT = PADDLE_HEIGHT/2
 
 
-# Object coordinates
+# Object coordinates and movement
 PLAYER_XPOS = 20
 PLAYER_YPOS = (SCREEN_HEIGHT/2) - PADDLE_CENTERPOINT
 CPU_XPOS = SCREEN_WIDTH - 60
 CPU_YPOS = (SCREEN_HEIGHT/2) - PADDLE_CENTERPOINT
+BALL_SPEED = 4
+INITIAL_DIRECTIONS = (
+    -10,
+    -20,
+    -30,
+    -150,
+    -160,
+    -170,
+    -190,
+    -200,
+    -210,
+    -330,
+    -340,
+    -350,
+)
