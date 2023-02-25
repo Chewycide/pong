@@ -1,7 +1,6 @@
 import pygame
 import random
 
-from abstracts.direction_handler import DirectionHandler
 from abstracts.constants import (
     BALL_VELOCITY,
     BALL_RADIUS

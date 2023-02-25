@@ -3,7 +3,8 @@ import sys
 
 from abstracts.constants import (
     SCREEN_WIDTH,
-    SCREEN_HEIGHT,
+    UPPER_BOUND,
+    LOWER_BOUND,
     DEFAULT_FPS,
     SCREEN_SIZE,
     WINDOW_TITLE,
@@ -19,6 +20,7 @@ from objects.paddle import (
     ComPongPaddle
 )
 from objects.pong_ball import PongBall
+from objects.boundary import BoundaryLine
 from abstracts.direction_handler import DirectionHandler
 from pygame.locals import *
 
@@ -35,6 +37,8 @@ player = PlayerPongPaddle(PLAYER_XPOS, PLAYER_YPOS)
 cpu = ComPongPaddle(CPU_XPOS, CPU_YPOS)
 ball = PongBall(BALL_INITIALX, BALL_INITIALY)
 dh = DirectionHandler(ball.velocity)
+bl = BoundaryLine(UPPER_BOUND, LOWER_BOUND, SCREEN_WIDTH)
+
 
 # Main game loop
 while True:
@@ -59,6 +63,7 @@ while True:
     # print(f"({ball_vx} , {ball_vy}) , angle: {ball.direction}")
     ball.update_coord(ball_vx, ball_vy)
     ball.draw(screen)
+    bl.draw(screen)
 
     # check player
     if ball.get_left_point() <= player.rect.right:
@@ -81,7 +86,7 @@ while True:
             ball.ball_reset(screen, BALL_INITIALX, BALL_INITIALY)
     
     # check walls
-    if ball.get_upper_point() <= 0 or ball.get_lower_point() >= SCREEN_HEIGHT:
+    if ball.get_upper_point() <= UPPER_BOUND or ball.get_lower_point() >= LOWER_BOUND:
         ball.wall_bounce()
 
     # TODO: REFACTOR MAIN LOOP
