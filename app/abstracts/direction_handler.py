@@ -12,8 +12,8 @@ class DirectionHandler(object):
 
 
     def get_xcomp(self, angle) -> float:
-        return self.magnitude * round(math.cos(math.radians(angle)), 2)
+        return round(self.magnitude * math.cos(math.radians(angle)), 2)
 
 
     def get_ycomp(self, angle) -> float:
-        return self.magnitude * round(math.sin(math.radians(angle)), 2)
+        return round(self.magnitude * math.sin(math.radians(angle)), 2)

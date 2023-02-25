@@ -27,11 +27,11 @@ class ComPongPaddle(PongPaddle):
         super().__init__(x_pos, y_pos)
 
     def movement(self, ball_ypos):
-        if self.rect.centery > ball_ypos:
-            self.rect.move_ip(0, -6)
+            if self.rect.centery > ball_ypos:
+                self.rect.move_ip(0, -2)
 
-        if self.rect.centery < ball_ypos:
-            self.rect.move_ip(0, 6)
+            if self.rect.centery < ball_ypos:
+                self.rect.move_ip(0, 2)
 
 
 class PlayerPongPaddle(PongPaddle):

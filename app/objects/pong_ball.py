@@ -39,7 +39,7 @@ class PongBall(object):
 
     def ball_reset(self, surface, x_pos, y_pos):
         self.__init__(x_pos, y_pos)
-        self.draw(surface, self.color, self.center, self.radius)
+        self.draw(surface)
 
 
     def draw(self, surface):
