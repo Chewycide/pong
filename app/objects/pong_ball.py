@@ -3,8 +3,8 @@ import random
 
 from abstracts.direction_handler import DirectionHandler
 from abstracts.constants import (
-    BALL_SPEED,
-    INITIAL_DIRECTIONS
+    BALL_VELOCITY,
+    BALL_RADIUS
 )
 
 
@@ -14,31 +14,32 @@ class PongBall(object):
         self.y = y_pos
         self.center = (self.x, self.y)
 
-        self.radius = 8
+        self.radius = BALL_RADIUS
         self.color = pygame.Color(0, 0, 0)
 
-        self.direction = random.choice(INITIAL_DIRECTIONS)
-        self.direction_handler = DirectionHandler(BALL_SPEED)
+        self.direction = random.randint(1, 360)
+        self.velocity = BALL_VELOCITY
 
-        
-    
 
-    def move_forward(self):
-        sx = self.direction_handler.get_xcomp(self.direction)
-        sy = self.direction_handler.get_ycomp(self.direction)
-        self.x += sx
-        self.y += sy
+    def update_coord(self, vx, vy):
+        self.x += vx
+        self.y += vy
         self.center = (self.x, self.y)
-
-    
-    def wall_bounce(self):
-        self.direction += -180
-        self.move_forward()
 
 
     def paddle_bounce(self):
-        self.direction -= 180.0
-        self.move_forward()
+        new_direction = 180 - (self.direction * 2)
+        self.direction += new_direction
+
+    
+    def wall_bounce(self):
+        new_direction = (180 - self.direction) * 2
+        self.direction += new_direction
+    
+
+    def ball_reset(self, surface, x_pos, y_pos):
+        self.__init__(x_pos, y_pos)
+        self.draw(surface, self.color, self.center, self.radius)
 
 
     def draw(self, surface):

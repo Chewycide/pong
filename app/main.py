@@ -1,8 +1,6 @@
 import pygame
 import sys
 
-
-from pygame.locals import *
 from abstracts.constants import (
     DEFAULT_FPS,
     SCREEN_SIZE,
@@ -16,6 +14,9 @@ from objects.paddle import (
     PlayerPongPaddle,
     ComPongPaddle
 )
+from objects.pong_ball import PongBall
+from abstracts.direction_handler import DirectionHandler
+from pygame.locals import *
 
 
 clock = pygame.time.Clock()
@@ -28,6 +29,8 @@ white_background = pygame.Color(255,255,255,0)
 # Objects
 player = PlayerPongPaddle(PLAYER_XPOS, PLAYER_YPOS)
 cpu = ComPongPaddle(CPU_XPOS, CPU_YPOS)
+ball = PongBall(int(600/2), int(400/2))
+dh = DirectionHandler(ball.velocity)
 
 # Main game loop
 while True:
@@ -40,13 +43,43 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-                
+            
 
     # Update objects
     player.draw(screen)
     player.movement()
     cpu.draw(screen)
+    cpu.movement(ball.y)
+    ball_vx = dh.get_xcomp(ball.direction)
+    ball_vy = dh.get_ycomp(ball.direction)
+    print(f"({ball_vx} , {ball_vy}) , angle: {ball.direction}")
+    ball.update_coord(ball_vx, ball_vy)
+    ball.draw(screen)
 
+    # check player
+    if ball.get_left_point() <= player.rect.right:
+
+        if ball.get_lower_point() > player.rect.top and ball.get_upper_point() < player.rect.bottom:
+            ball.paddle_bounce()
+            # ball_vx *= -1
+        
+        if ball.get_right_point() < player.rect.left:
+            print("RIGHT SCORES")
+
+    # check cpu
+    if ball.get_right_point() >= cpu.rect.left:
+
+        if ball.get_lower_point() > cpu.rect.top and ball.get_upper_point() < cpu.rect.bottom:
+            ball.paddle_bounce()
+
+        if ball.get_right_point() < player.rect.left:
+            print("RIGHT SCORES")
+    
+    # check walls
+    if ball.get_upper_point() <= 0 or ball.get_lower_point() >= 500:
+        ball.wall_bounce()
+
+    # TODO: REFACTOR MAIN LOOP
 
     pygame.display.update()
     clock.tick(DEFAULT_FPS) # Maintain 60 frames per second

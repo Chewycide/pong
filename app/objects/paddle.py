@@ -1,6 +1,5 @@
 import pygame
 
-
 from abstracts.constants import (
     PADDLE_WIDTH,
     PADDLE_HEIGHT
@@ -26,6 +25,13 @@ class ComPongPaddle(PongPaddle):
     """CPU subclass"""
     def __init__(self, x_pos, y_pos):
         super().__init__(x_pos, y_pos)
+
+    def movement(self, ball_ypos):
+        if self.rect.centery > ball_ypos:
+            self.rect.move_ip(0, -6)
+
+        if self.rect.centery < ball_ypos:
+            self.rect.move_ip(0, 6)
 
 
 class PlayerPongPaddle(PongPaddle):
