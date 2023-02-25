@@ -51,9 +51,9 @@ while True:
 
     # Update objects
     player.draw(screen)
-    player.movement()
+    player.movement(player.check_upper_bound(), player.check_lower_bound())
     cpu.draw(screen)
-    cpu.movement(ball.y)
+    cpu.movement(ball.y, cpu.check_upper_bound(), cpu.check_lower_bound())
     ball_vx = dh.get_xcomp(ball.direction)
     ball_vy = dh.get_ycomp(ball.direction)
     # print(f"({ball_vx} , {ball_vy}) , angle: {ball.direction}")
