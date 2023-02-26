@@ -69,7 +69,7 @@ while True:
     if ball.get_left_point() <= player.rect.right:
 
         if ball.get_lower_point() > player.rect.top and ball.get_upper_point() < player.rect.bottom:
-            ball.paddle_bounce()
+            ball.paddle_bounce(player.rect.centery, player.height, 'l')
         
         if ball.get_right_point() < player.rect.left:
             print("CPU SCORES")
@@ -79,7 +79,7 @@ while True:
     if ball.get_right_point() >= cpu.rect.left:
 
         if ball.get_lower_point() > cpu.rect.top and ball.get_upper_point() < cpu.rect.bottom:
-            ball.paddle_bounce()
+            ball.paddle_bounce(cpu.rect.centery, cpu.height, 'r')
 
         if ball.get_right_point() > cpu.rect.right:
             print("PLAYER SCORES")
