@@ -65,23 +65,25 @@ while True:
     ball.draw(screen)
     bl.draw(screen)
 
-    # check player
-    if ball.get_left_point() <= player.rect.right:
+    # check if the player hits the ball
+    if ball.get_left_point() < player.rect.right:
 
-        if ball.get_lower_point() > player.rect.top and ball.get_upper_point() < player.rect.bottom:
+        # check if ball is not above or below the paddle
+        if ball.y > player.rect.top and ball.y < player.rect.bottom:
             ball.paddle_bounce(player.rect.centery, player.height, 'l')
         
-        if ball.get_right_point() < player.rect.left:
+        elif ball.x < player.rect.left:
             print("CPU SCORES")
             ball.ball_reset(screen, BALL_INITIALX, BALL_INITIALY)
 
-    # check cpu
-    if ball.get_right_point() >= cpu.rect.left:
+    # check if the cpu hits the ball
+    if ball.get_right_point() > cpu.rect.left:
 
-        if ball.get_lower_point() > cpu.rect.top and ball.get_upper_point() < cpu.rect.bottom:
+        # check if ball is not above or below the paddle
+        if ball.y > cpu.rect.top and ball.y < cpu.rect.bottom:
             ball.paddle_bounce(cpu.rect.centery, cpu.height, 'r')
 
-        if ball.get_right_point() > cpu.rect.right:
+        elif ball.x > cpu.rect.right:
             print("PLAYER SCORES")
             ball.ball_reset(screen, BALL_INITIALX, BALL_INITIALY)
     
